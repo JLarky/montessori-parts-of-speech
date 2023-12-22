@@ -10,11 +10,12 @@ export type Props = {};
   section {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 1rem;
+    gap: 1vw;
   }
   @media print {
     section {
       page-break-before: always;
+      gap: 2px;
     }
   }
 </style>
