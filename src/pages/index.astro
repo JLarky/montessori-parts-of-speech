@@ -1,6 +1,7 @@
 ---
 import Page from "../ui/Page.astro";
 import Word from "../ui/Word.astro";
+import { Counter } from "../ui/couter";
 
 const nouns = `
 cat
@@ -61,6 +62,7 @@ function renderWords(words: string, map: <T>(word: string) => T) {
     <title>Montessori Parts of Speech</title>
   </head>
   <body>
+    <Counter />
     <Page>
       {renderWords(nouns, (x) => <Word type="noun">{x}</Word>)}
       {renderWords(verbs, (x) => <Word type="verb">{x}</Word>)}
