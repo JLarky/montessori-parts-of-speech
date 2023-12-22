@@ -1,0 +1,37 @@
+---
+export type Props = {
+  type: keyof typeof colors;
+};
+
+const { type } = Astro.props;
+
+const colors = {
+  noun: "#231f20",
+  verb: "#aa1f1c",
+  adjective: "#593a18",
+  adverb: "#f26223",
+  preposition: "#3fae49",
+  conjunction: "#f2838b",
+  pronoun: "#771d5e",
+  article: "#bd7c42",
+};
+
+const color = colors[type];
+---
+
+<div style={{ borderColor: color }}>
+  <slot />
+</div>
+<style>
+  div {
+    box-sizing: border-box;
+    border: 1.5vw solid;
+    aspect-ratio: 3.125;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Tahoma, "Trebuchet MS", sans-serif;
+    font-size: 3vw;
+    overflow: hidden;
+  }
+</style>

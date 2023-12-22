@@ -1,5 +1,55 @@
 ---
+import Page from "../ui/Page.astro";
+import Word from "../ui/Word.astro";
 
+const nouns = `
+cat
+dog
+bird
+fish
+`;
+const verbs = `
+run
+jump
+swim
+fly
+`;
+const adjectives = `
+red
+blue
+green
+yellow
+`;
+const adverbs = `
+quickly
+slowly
+`;
+const prepositions = `
+in
+on
+under
+above
+`;
+const conjunction = `
+and
+but
+or
+`;
+const pronouns = `
+I
+you
+he
+she
+`;
+const articles = `
+a
+an
+the
+`;
+
+function renderWords(words: string, map: <T>(word: string) => T) {
+  return words.trim().split("\n").map(map);
+}
 ---
 
 <html lang="en">
@@ -8,9 +58,25 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <title>Montessori Parts of Speech</title>
   </head>
   <body>
-    <h1>Astro</h1>
+    <Page>
+      {renderWords(nouns, (x) => <Word type="noun">{x}</Word>)}
+      {renderWords(verbs, (x) => <Word type="verb">{x}</Word>)}
+      {renderWords(adjectives, (x) => <Word type="adjective">{x}</Word>)}
+      {renderWords(adverbs, (x) => <Word type="adverb">{x}</Word>)}
+      {renderWords(prepositions, (x) => <Word type="preposition">{x}</Word>)}
+      {renderWords(conjunction, (x) => <Word type="conjunction">{x}</Word>)}
+      {renderWords(pronouns, (x) => <Word type="pronoun">{x}</Word>)}
+      {renderWords(articles, (x) => <Word type="article">{x}</Word>)}
+    </Page>
+    <style is:global>
+      @media print {
+        astro-dev-toolbar {
+          display: none;
+        }
+      }
+    </style>
   </body>
 </html>
