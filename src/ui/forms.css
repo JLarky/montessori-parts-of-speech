@@ -1,0 +1,10 @@
+textarea {
+  width: 400px;
+  height: 200px;
+  box-sizing: border-box;
+  border: 6px solid;
+  &:focus {
+    outline-width: 3px;
+    outline-style: solid;
+  }
+}
