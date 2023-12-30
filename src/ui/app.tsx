@@ -68,9 +68,10 @@ export const Forms = component$(
         </h2>
         {Object.entries(localData.value).map(([key, value]) => {
           return (
-            <section class="my-text" key={key}>
+            <section key={key}>
               <h3>{key}</h3>
               <textarea
+                aria-label={key}
                 value={value}
                 style={{ borderColor: colors[key as keyof typeof colors] }}
                 onInput$={(_, el) => {
