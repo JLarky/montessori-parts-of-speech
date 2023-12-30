@@ -1,0 +1,132 @@
+---
+import Page from "../ui/Page.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Propisi</title>
+  </head>
+  <body>
+    <Page />
+    <section id="output"></section>
+    <section id="full"></section>
+    <script type="module">
+      const x = await fetch("/content/propisi.html");
+      document.getElementById("full").innerHTML = await x.text();
+      let i = 0;
+      const out = document.getElementById("output");
+      function getTables() {
+        const table1 = document.createElement("table");
+        const table2 = document.createElement("table");
+        table1.style.borderCollapse = "collapse";
+        table2.style.borderCollapse = "collapse";
+        table1.style.pageBreakAfter = "always";
+        table2.style.pageBreakAfter = "always";
+
+        out.appendChild(table1);
+        out.appendChild(table2);
+        return { table1, table2 };
+      }
+      let table1;
+      let table2;
+      document.querySelectorAll("#full table tr").forEach((tr) => {
+        const outTr = document.createElement("tr");
+        tr.querySelectorAll("td").forEach((td) => {
+          const style = getComputedStyle(td);
+          const outTd = document.createElement("td");
+          outTd.innerHTML = td.innerHTML;
+          outTd.style.backgroundColor = style.backgroundColor;
+          outTd.style.border = style.border;
+          outTr.appendChild(outTd);
+        });
+        if (i % 14 === 0) {
+          const { table1: newTable1, table2: newTable2 } = getTables();
+          table1 = newTable1;
+          table2 = newTable2;
+        }
+        table1.appendChild(outTr);
+        const otherTr = document.createElement("tr");
+        const [td1, td2, td3, td4] = outTr.querySelectorAll("td");
+        otherTr.appendChild(td3.cloneNode(true));
+        otherTr.appendChild(td4.cloneNode(true));
+        otherTr.appendChild(td1.cloneNode(true));
+        otherTr.appendChild(td2.cloneNode(true));
+        otherTr.classList.add("propisi2");
+        table2.appendChild(otherTr);
+        console.log(i++);
+      });
+    </script>
+    <style is:global>
+      @font-face {
+        font-family: "Propisi";
+        src: url("/fonts/propisi/Propisi.ttf");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+      tr.propisi2 td * {
+        &:before {
+          /* fixes bug with text beingh 0 height */
+          content: "";
+          font-family: sans-serif;
+        }
+        font-family: "Propisi", sans-serif;
+        font-size: 5rem;
+        line-height: 0;
+      }
+      .propisi {
+        &:before {
+          /* fixes bug with text beingh 0 height */
+          content: "";
+          font-family: sans-serif;
+        }
+        font-family: "Propisi", sans-serif;
+      }
+      table tr td:nth-child(1),
+      table tr td:nth-child(3) {
+        height: 100px;
+        --size: 459px;
+        min-width: var(--size);
+        max-width: var(--size);
+        width: var(--size);
+      }
+      table tr td:nth-child(2),
+      table tr td:nth-child(4) {
+        width: 87px;
+      }
+      table > tbody > tr > td .c2,
+      table > tbody > tr > td .c12,
+      table > tbody > tr > td .c13,
+      table > tbody > tr > td .c21,
+      table > tbody > tr > td .c25,
+      table > tbody > tr > td .c33,
+      table > tbody > tr > td .c40,
+      table > tbody > tr > td .c42,
+      table > tbody > tr > td .c51,
+      table > tbody > tr > td .c57,
+      table > tbody > tr > td .c59,
+      table > tbody > tr > td .c74,
+      table > tbody > tr > td .c84,
+      #loltest {
+        &:before {
+          content: "";
+          font-family: sans-serif;
+        }
+        font-family: "Propisi", sans-serif;
+        font-size: 5rem;
+      }
+      @media print {
+        #full {
+          display: none;
+        }
+        astro-dev-toolbar {
+          display: none;
+        }
+      }
+    </style>
+  </body>
+</html>
