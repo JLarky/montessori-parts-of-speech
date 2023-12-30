@@ -15,18 +15,29 @@ import { App } from "../ui/app";
     />
   </head>
   <body>
-    <h1>Montessori Parts of Speech</h1>
+    <h1>A bug</h1>
     <section>
-      <h2>What is this?</h2>
-      <p>
-        <a href="https://montessori-parts-of-speech.deno.dev/"
-          >montessori-parts-of-speech.deno.dev</a
-        > is a tool to help children learn parts of speech. It is based on the
-        <a href="https://en.wikipedia.org/wiki/Montessori_education">
-          Montessori method</a
-        >.
-      </p>
+      reproducing https://twitter.com/JLarky/status/1740955437305069673
+      <details>
+        <summary>more</summary>
+        <ul>
+          <li>
+            src/ui/app.tsx line 34 is what triggest the bug `localData.value =
+            dataAfterHydration;`
+          </li>
+          <li>
+            src/ui/app.tsx line 53 is where the key is missing `{
+              "key={word + index}"
+            }`
+          </li>
+          <li>
+            you don't have to add a new word to the list (line 33) to trigger
+            warning, but that line is what is causing wrong CSS to be applied
+          </li>
+        </ul>
+      </details>
     </section>
+    <br />
     <App />
     <style is:global>
       @media print {

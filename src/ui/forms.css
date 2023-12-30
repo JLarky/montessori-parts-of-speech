@@ -1,6 +1,6 @@
 textarea {
   width: 400px;
-  height: 200px;
+  height: 70px;
   box-sizing: border-box;
   border: 6px solid;
   &:focus {

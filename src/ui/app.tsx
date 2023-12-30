@@ -16,20 +16,7 @@ export const App = component$(() => {
   const localData = useSignal(data);
   return (
     <>
-      Bellow you will find inputs that allow you to set custom word sets.
       <Forms localData={localData} />
-      <header class="print:hidden">
-        <h2>
-          Labels to print:{" "}
-          <button
-            onClick$={() => {
-              window.print();
-            }}
-          >
-            Print
-          </button>
-        </h2>
-      </header>
       <RenderedWords localData={localData} />
     </>
   );
@@ -41,67 +28,15 @@ export const Forms = component$(
 
     useVisibleTask$(
       () => {
-        const lsState = localStorage.getItem("_parts_state");
-        if (lsState) {
-          localData.value = JSON.parse(lsState);
-        }
+        const dataAfterHydration = structuredClone(data);
+        // this line could be omitted, but it gives visual feedback
+        dataAfterHydration.nouns += "\nthis word should be black, not red";
+        localData.value = dataAfterHydration;
       },
       { strategy: "document-ready" }
     );
 
-    return (
-      <section class="print:hidden">
-        <h2>
-          Words{" "}
-          <button
-            onClick$={() => {
-              const value = prompt(
-                "Enter JSON that you got from Export button"
-              );
-              if (value) {
-                localData.value = JSON.parse(value);
-                localStorage.setItem(
-                  "_parts_state",
-                  JSON.stringify(localData.value)
-                );
-              }
-            }}
-          >
-            Import
-          </button>{" "}
-          <button
-            onClick$={() => {
-              const value = JSON.stringify(localData.value);
-              prompt("Copy this JSON so you can import it later", value);
-            }}
-          >
-            Export
-          </button>
-        </h2>
-        {Object.entries(localData.value).map(([key, value]) => {
-          return (
-            <section key={key}>
-              <h3>{key}</h3>
-              <textarea
-                aria-label={key}
-                value={value}
-                style={{ borderColor: colors[key as keyof typeof colors] }}
-                onInput$={(_, el) => {
-                  localData.value = {
-                    ...localData.value,
-                    [key]: el.value,
-                  };
-                  localStorage.setItem(
-                    "_parts_state",
-                    JSON.stringify(localData.value)
-                  );
-                }}
-              />
-            </section>
-          );
-        })}
-      </section>
-    );
+    return null;
   }
 );
 
@@ -115,9 +50,8 @@ export const RenderedWords = component$(
       <Page>
         {Object.entries(localData.value).map(([key, value]) => {
           return getWords(value).map((word, index) => (
-            <Word key={word + index} type={key as keyof typeof colors}>
-              {word}
-            </Word>
+            // <Word key={word + index} type={key as keyof typeof colors}>{word}</Word>
+            <Word type={key as keyof typeof colors}>{word}</Word>
           ));
         })}
       </Page>
