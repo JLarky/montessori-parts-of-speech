@@ -18,6 +18,18 @@ export const App = component$(() => {
     <>
       Bellow you will find inputs that allow you to set custom word sets.
       <Forms localData={localData} />
+      <header class="print:hidden">
+        <h2>
+          Labels to print:{" "}
+          <button
+            onClick$={() => {
+              window.print();
+            }}
+          >
+            Print
+          </button>
+        </h2>
+      </header>
       <RenderedWords localData={localData} />
     </>
   );
